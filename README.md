@@ -22,3 +22,7 @@
 - React 18 / ReactDOM
 - Tailwind CSS
 - (Babel standalone, exifr, encoding-japanese などのブラウザ向けライブラリを使用)
+
+## ライセンス
+このプロジェクトは [MIT License](LICENSE) のもとで公開・提供されています。
+商用利用、改変、再配布などが原則として自由に行えます。
