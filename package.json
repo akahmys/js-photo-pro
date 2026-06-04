@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "harness": "tsc --noEmit && vite build",
+    "harness": "node scripts/check-compliance.js && tsc --noEmit && vite build",
     "preview": "vite preview"
   },
   "dependencies": {
