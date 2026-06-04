@@ -1,0 +1,492 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --js-navy: #002d6e;
+  --js-blue: #0055b3;
+  --js-sky: #0ea5e9;
+  --js-accent: #f59e0b;
+  --js-green: #10b981;
+  --js-red: #ef4444;
+  --js-bg: #f0f4f8;
+  --js-card: #ffffff;
+  --js-border: #dde3ec;
+  --js-text: #1a2433;
+  --js-muted: #64748b;
+}
+
+body {
+  font-family: 'Noto Sans JP', sans-serif;
+  background: var(--js-bg);
+  color: var(--js-text);
+  overflow: hidden;
+  margin: 0;
+}
+
+.mono {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* ===== スクロールバー ===== */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c0cad8;
+  border-radius: 99px;
+}
+
+.no-sb::-webkit-scrollbar {
+  display: none;
+}
+
+.no-sb {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* ===== アニメーション ===== */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes pulse2 {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: .4;
+  }
+}
+
+.anim-fadeup {
+  animation: fadeUp .3s ease both;
+}
+
+.spinner {
+  width: 22px;
+  height: 22px;
+  border: 2.5px solid rgba(255, 255, 255, .25);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin .7s linear infinite;
+}
+
+/* ===== カード ===== */
+.photo-card {
+  background: var(--js-card);
+  border: 1.5px solid var(--js-border);
+  border-radius: 12px;
+  transition: transform .15s, box-shadow .15s, border-color .15s;
+  cursor: pointer;
+}
+
+.photo-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 45, 110, .1);
+  border-color: #a0b4cc;
+}
+
+.photo-card.selected {
+  border-color: var(--js-blue);
+  box-shadow: 0 0 0 3px rgba(0, 85, 179, .15);
+  transform: translateY(-2px);
+}
+
+.photo-card.error-card {
+  border-color: #f97316;
+  background: #fffcf7;
+}
+
+.photo-card.error-card:hover {
+  border-color: #ea580c;
+}
+
+/* ===== ボタン ===== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 700;
+  border-radius: 8px;
+  padding: 7px 14px;
+  font-size: 12px;
+  transition: all .15s;
+  cursor: pointer;
+  border: none;
+  letter-spacing: .02em;
+}
+
+.btn:active {
+  transform: scale(.97);
+}
+
+.btn-navy {
+  background: var(--js-navy);
+  color: #fff;
+}
+
+.btn-navy:hover {
+  background: #001d4a;
+}
+
+.btn-blue {
+  background: var(--js-blue);
+  color: #fff;
+}
+
+.btn-blue:hover {
+  background: #0044a0;
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--js-muted);
+  border: 1.5px solid var(--js-border);
+}
+
+.btn-ghost:hover {
+  background: #f1f5f9;
+  color: var(--js-text);
+  border-color: #a0b4cc;
+}
+
+.btn-danger {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.btn-danger:hover {
+  background: #fecaca;
+}
+
+.btn-warn {
+  background: #fef3c7;
+  color: #b45309;
+}
+
+.btn-warn:hover {
+  background: #fde68a;
+}
+
+.btn-green {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.btn-green:hover {
+  background: #a7f3d0;
+}
+
+/* ===== フォーム ===== */
+.field-label {
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--js-muted);
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  margin-bottom: 4px;
+  display: block;
+}
+
+.field-label.required::after {
+  content: " *";
+  color: var(--js-red);
+}
+
+.field-input {
+  width: 100%;
+  background: #f8fafc;
+  border: 1.5px solid var(--js-border);
+  border-radius: 8px;
+  padding: 9px 12px;
+  font-size: 13px;
+  font-weight: 500;
+  font-family: 'Noto Sans JP', sans-serif;
+  outline: none;
+  transition: border .15s, box-shadow .15s;
+}
+
+.field-input:focus {
+  border-color: var(--js-blue);
+  box-shadow: 0 0 0 3px rgba(0, 85, 179, .1);
+  background: #fff;
+}
+
+.field-input.err {
+  border-color: #f97316;
+}
+
+/* ===== ヘッダー ===== */
+.app-header {
+  background: var(--js-navy);
+  color: #fff;
+  padding: 0 20px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+
+/* ===== ステータスバー ===== */
+.status-bar {
+  background: #0f1923;
+  color: #94a3b8;
+  padding: 0 20px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: .06em;
+}
+
+/* ===== バッジ ===== */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 2px 8px;
+  border-radius: 99px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .05em;
+}
+
+.badge-blue {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.badge-green {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.badge-orange {
+  background: #ffedd5;
+  color: #c2410c;
+}
+
+.badge-slate {
+  background: #f1f5f9;
+  color: #475569;
+  border: 1px solid #e2e8f0;
+}
+
+.badge-h30 {
+  background: #fef9c3;
+  color: #854d0e;
+  border: 1px solid #fde68a;
+}
+
+.badge-r06 {
+  background: #dbeafe;
+  color: #1e40af;
+  border: 1px solid #bfdbfe;
+}
+
+/* ===== セクション区切り ===== */
+.section-div {
+  height: 1px;
+  background: var(--js-border);
+  margin: 12px 0;
+}
+
+/* ===== 検証バナー ===== */
+.validation-banner {
+  background: #fffbeb;
+  border: 1.5px solid #fcd34d;
+  border-radius: 8px;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #92400e;
+}
+
+/* ===== ドロップゾーン ===== */
+.drop-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0, 45, 110, .12);
+  border: 3px dashed var(--js-blue);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+/* ===== 印刷 ===== */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+
+  body {
+    background: white !important;
+    overflow: visible !important;
+  }
+
+  @page {
+    size: A4 portrait;
+    margin: 10mm;
+  }
+
+  .print-cover {
+    page-break-after: always;
+    padding: 20mm;
+  }
+
+  /* 写真台帳：1ページ2枚 */
+  .ledger-page {
+    width: 190mm;
+    margin: 0 auto;
+    page-break-after: always;
+  }
+
+  .ledger-item {
+    display: flex;
+    height: 92mm;
+    border: 1px solid #444;
+    margin-bottom: 5mm;
+    page-break-inside: avoid;
+  }
+
+  .ledger-photo {
+    width: 115mm;
+    border-right: 1px solid #444;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3mm;
+    background: #f9f9f9;
+  }
+
+  .ledger-photo img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+  }
+
+  .ledger-meta {
+    flex: 1;
+    padding: 4mm;
+    display: flex;
+    flex-direction: column;
+    gap: 2mm;
+    font-size: 8.5pt;
+  }
+
+  .meta-row {
+    border-bottom: .3mm solid #e0e0e0;
+    padding-bottom: 1.5mm;
+  }
+
+  .meta-key {
+    font-weight: 700;
+    color: #555;
+    font-size: 7.5pt;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+  }
+
+  .meta-val {
+    font-weight: 700;
+    color: #111;
+    font-size: 9pt;
+    word-break: break-all;
+  }
+
+  .meta-serial {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11pt;
+    color: #002d6e;
+    font-weight: 900;
+  }
+}
+
+/* ===== トースト ===== */
+.toast {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9998;
+  padding: 12px 20px;
+  border-radius: 99px;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, .25);
+  animation: fadeUp .3s ease both;
+}
+
+/* ===== ツールチップ ===== */
+[data-tip] {
+  position: relative;
+}
+
+[data-tip]:hover::after {
+  content: attr(data-tip);
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1e293b;
+  color: #f8fafc;
+  padding: 4px 9px;
+  border-radius: 6px;
+  font-size: 10px;
+  font-weight: 600;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 100;
+}
+
+/* ===== XML自動保存 インジケータ ===== */
+.autosave-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--js-green);
+  animation: pulse2 2s infinite;
+}
+
+/* select カスタム */
+select.field-input {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2364748b' stroke-width='2.5'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 14px;
+  padding-right: 32px;
+}
