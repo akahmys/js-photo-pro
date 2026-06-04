@@ -26,3 +26,7 @@ dist-ssr/
 *.njsproj
 *.sln
 *.sw?
+
+# External specifications and internal docs (Not for repository)
+docs/
+
