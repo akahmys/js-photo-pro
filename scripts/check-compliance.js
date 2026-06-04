@@ -20,6 +20,11 @@ const COMPLIANCE_RULES = [
     message: 'テスト用（example.com等）以外の実在する可能性のあるメールアドレスが検出されました。'
   },
   {
+    name: 'Absolute Local Path',
+    regex: /\/Users\/[a-zA-Z0-9_-]+\/|[a-zA-Z]:[\\/]Users[\\/][a-zA-Z0-9_-]+\//i,
+    message: 'ローカル環境の絶対パス（例: /Users/ユーザー名/...）が検出されました。相対パスを使用してください。'
+  },
+  {
     name: 'Forbidden Standard Specs / Documents',
     regex: /下水道事業団|電子納品基準|国土交通省|完成図書電子納品要領/i,
     // ソースコード内の軽微な言及（コメントなど）は許容するが、大量の仕様書テキストや書類ファイル自体の混入を警告
