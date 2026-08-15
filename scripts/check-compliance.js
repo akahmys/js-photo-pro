@@ -1,49 +1,9 @@
 import { execSync } from 'node:child_process';
 import fs from 'node:fs';
 
-// 1. 検出ルール定義
+// 1. プロジェクト固有コンプライアンスルール定義
+// ※ 秘密鍵、APIキー、メールアドレス、個人情報等のシークレット監査は Betterleaks が担当
 const COMPLIANCE_RULES = [
-  {
-    name: 'Private Key / Credentials',
-    regex: /-----BEGIN (?:RSA |EC |PGP |OPENSSH )?PRIVATE KEY-----|AMZN-OTK|HEROKU_API_KEY/i,
-    message: '秘密鍵または認証トークンが検出されました。',
-  },
-  {
-    name: 'Google API Key / Generic Secret',
-    regex: /AIza[0-9A-Za-z-_]{35}|api[-_]?key|client[-_]?secret|db[-_]?(?:password|pass)/i,
-    message: 'APIキー、またはパスワード/シークレット情報らしき記述が検出されました。',
-  },
-  {
-    name: 'Personal Email Address',
-    regex: /[a-zA-Z0-9._%+-]+@(?!example\.com|test\.com|domain\.com)[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/,
-    message: 'テスト用（example.com等）以外の実在する可能性のあるメールアドレスが検出されました。',
-  },
-  {
-    name: 'Personal Information / Author Detection',
-    customCheck: (content) => {
-      // ローカル設定または環境変数または動的パターンから検出
-      const patterns = [];
-      if (process.env.RESTRICTED_AUTHORS) {
-        patterns.push(new RegExp(process.env.RESTRICTED_AUTHORS, 'i'));
-      }
-      if (fs.existsSync('.betterleaks.local.toml')) {
-        const localCfg = fs.readFileSync('.betterleaks.local.toml', 'utf-8');
-        const m = localCfg.match(/regex\s*=\s*'''([^']+)'''/);
-        if (m) {
-          try {
-            patterns.push(new RegExp(m[1], 'i'));
-          } catch {}
-        }
-      }
-      // 動的フォールバック（難読化パターン）
-      if (patterns.length === 0) {
-        const pStr = Buffer.from('XGJqdW5bXHNfLV0/a2F0b1xi', 'base64').toString();
-        patterns.push(new RegExp(pStr, 'i'));
-      }
-      return patterns.some((p) => p.test(content));
-    },
-    message: '個人情報・開発者氏名らしき記述が検出されました。',
-  },
   {
     name: 'Absolute Local Path',
     regex: /\/Users\/[a-zA-Z0-9_-]+\/|[a-zA-Z]:[\\/]Users[\\/][a-zA-Z0-9_-]+\//i,
@@ -52,7 +12,6 @@ const COMPLIANCE_RULES = [
   },
   {
     name: 'Forbidden Standard Specs / Documents',
-    regex: /下水道事業団|電子納品基準|国土交通省|完成図書電子納品要領/i,
     // ソースコード内の軽微な言及（コメントなど）は許容するが、大量の仕様書テキストや書類ファイル自体の混入を警告
     customCheck: (content, filePath) => {
       // docsディレクトリ自体は.gitignoreされているが、ステージングに入ってしまった場合
