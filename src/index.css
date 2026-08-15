@@ -17,7 +17,7 @@
 }
 
 body {
-  font-family: 'Noto Sans JP', sans-serif;
+  font-family: "Noto Sans JP", sans-serif;
   background: var(--js-bg);
   color: var(--js-text);
   overflow: hidden;
@@ -25,7 +25,7 @@ body {
 }
 
 .mono {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: "JetBrains Mono", monospace;
 }
 
 /* ===== スクロールバー ===== */
@@ -71,25 +71,26 @@ body {
 }
 
 @keyframes pulse2 {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 1;
   }
   50% {
-    opacity: .4;
+    opacity: 0.4;
   }
 }
 
 .anim-fadeup {
-  animation: fadeUp .3s ease both;
+  animation: fadeUp 0.3s ease both;
 }
 
 .spinner {
   width: 22px;
   height: 22px;
-  border: 2.5px solid rgba(255, 255, 255, .25);
+  border: 2.5px solid rgba(255, 255, 255, 0.25);
   border-top-color: #fff;
   border-radius: 50%;
-  animation: spin .7s linear infinite;
+  animation: spin 0.7s linear infinite;
 }
 
 /* ===== カード ===== */
@@ -97,19 +98,22 @@ body {
   background: var(--js-card);
   border: 1.5px solid var(--js-border);
   border-radius: 12px;
-  transition: transform .15s, box-shadow .15s, border-color .15s;
+  transition:
+    transform 0.15s,
+    box-shadow 0.15s,
+    border-color 0.15s;
   cursor: pointer;
 }
 
 .photo-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0, 45, 110, .1);
+  box-shadow: 0 6px 20px rgba(0, 45, 110, 0.1);
   border-color: #a0b4cc;
 }
 
 .photo-card.selected {
   border-color: var(--js-blue);
-  box-shadow: 0 0 0 3px rgba(0, 85, 179, .15);
+  box-shadow: 0 0 0 3px rgba(0, 85, 179, 0.15);
   transform: translateY(-2px);
 }
 
@@ -131,14 +135,14 @@ body {
   border-radius: 8px;
   padding: 7px 14px;
   font-size: 12px;
-  transition: all .15s;
+  transition: all 0.15s;
   cursor: pointer;
   border: none;
-  letter-spacing: .02em;
+  letter-spacing: 0.02em;
 }
 
 .btn:active {
-  transform: scale(.97);
+  transform: scale(0.97);
 }
 
 .btn-navy {
@@ -204,7 +208,7 @@ body {
   font-weight: 700;
   color: var(--js-muted);
   text-transform: uppercase;
-  letter-spacing: .08em;
+  letter-spacing: 0.08em;
   margin-bottom: 4px;
   display: block;
 }
@@ -222,14 +226,16 @@ body {
   padding: 9px 12px;
   font-size: 13px;
   font-weight: 500;
-  font-family: 'Noto Sans JP', sans-serif;
+  font-family: "Noto Sans JP", sans-serif;
   outline: none;
-  transition: border .15s, box-shadow .15s;
+  transition:
+    border 0.15s,
+    box-shadow 0.15s;
 }
 
 .field-input:focus {
   border-color: var(--js-blue);
-  box-shadow: 0 0 0 3px rgba(0, 85, 179, .1);
+  box-shadow: 0 0 0 3px rgba(0, 85, 179, 0.1);
   background: #fff;
 }
 
@@ -261,7 +267,7 @@ body {
   flex-shrink: 0;
   font-size: 10.5px;
   font-weight: 700;
-  letter-spacing: .06em;
+  letter-spacing: 0.06em;
 }
 
 /* ===== バッジ ===== */
@@ -273,7 +279,7 @@ body {
   border-radius: 99px;
   font-size: 10px;
   font-weight: 700;
-  letter-spacing: .05em;
+  letter-spacing: 0.05em;
 }
 
 .badge-blue {
@@ -335,7 +341,7 @@ body {
   position: fixed;
   inset: 0;
   z-index: 9999;
-  background: rgba(0, 45, 110, .12);
+  background: rgba(0, 45, 110, 0.12);
   border: 3px dashed var(--js-blue);
   display: flex;
   align-items: center;
@@ -405,7 +411,7 @@ body {
   }
 
   .meta-row {
-    border-bottom: .3mm solid #e0e0e0;
+    border-bottom: 0.3mm solid #e0e0e0;
     padding-bottom: 1.5mm;
   }
 
@@ -414,7 +420,7 @@ body {
     color: #555;
     font-size: 7.5pt;
     text-transform: uppercase;
-    letter-spacing: .05em;
+    letter-spacing: 0.05em;
   }
 
   .meta-val {
@@ -425,7 +431,7 @@ body {
   }
 
   .meta-serial {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: "JetBrains Mono", monospace;
     font-size: 11pt;
     color: #002d6e;
     font-weight: 900;
@@ -446,8 +452,8 @@ body {
   display: flex;
   align-items: center;
   gap: 8px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, .25);
-  animation: fadeUp .3s ease both;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+  animation: fadeUp 0.3s ease both;
 }
 
 /* ===== ツールチップ ===== */
@@ -493,18 +499,34 @@ select.field-input {
 
 /* ===== 追加のアニメーションとGlassmorphism ===== */
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes scaleIn {
-  from { opacity: 0; transform: scale(0.95); }
-  to { opacity: 1; transform: scale(1); }
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 @keyframes slideIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .animate-fadeIn {
@@ -526,4 +548,3 @@ select.field-input {
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.4);
 }
-

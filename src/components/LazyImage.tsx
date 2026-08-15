@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
+import type React from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 interface LazyImageProps {
   file: File;
@@ -20,13 +21,16 @@ export const LazyImage: React.FC<LazyImageProps> = ({ file, className, forceLoad
         if (objUrl) URL.revokeObjectURL(objUrl);
       };
     }
-    const obs = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting) {
-        objUrl = URL.createObjectURL(file);
-        setUrl(objUrl);
-        obs.disconnect();
-      }
-    }, { rootMargin: '400px' });
+    const obs = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          objUrl = URL.createObjectURL(file);
+          setUrl(objUrl);
+          obs.disconnect();
+        }
+      },
+      { rootMargin: '400px' },
+    );
 
     if (ref.current) {
       obs.observe(ref.current);

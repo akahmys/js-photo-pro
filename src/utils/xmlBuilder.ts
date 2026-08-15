@@ -1,5 +1,5 @@
-import { Photo } from '../types';
 import { STANDARDS } from '../constants/standards';
+import type { Photo } from '../types';
 import { esc, sanitizeForJS } from './sanitize';
 
 /**
@@ -9,7 +9,7 @@ import { esc, sanitizeForJS } from './sanitize';
  *   「CCYY-MM-DD方式で記入する。月又は日が1桁の数の場合0を付加して必ず10桁で記入」
  */
 export const dateToXml = (d: string): string => {
-  if (!d) return "";
+  if (!d) return '';
   if (/^\d{8}$/.test(d)) return `${d.slice(0, 4)}-${d.slice(4, 6)}-${d.slice(6, 8)}`;
   return d;
 };
@@ -23,7 +23,7 @@ export const dateFromXml = dateToXml;
  * ⚠️ ゼロ埋めなし・Pプレフィックスなし・純粋な半角数字のみ
  */
 export const toSerial = (n: string | number): string => {
-  return String(Math.max(1, parseInt(String(n)) || 1));
+  return String(Math.max(1, parseInt(String(n), 10) || 1));
 };
 
 /**
@@ -33,7 +33,7 @@ export const toSerial = (n: string | number): string => {
  */
 export const buildPhotoXml = (photos: Photo[], stdId: string): string => {
   const std = STANDARDS[stdId];
-  if (!std) throw new Error("不明な基準IDです: " + stdId);
+  if (!std) throw new Error(`不明な基準IDです: ${stdId}`);
 
   let xml = `<?xml version="1.0" encoding="Shift_JIS"?>\n`;
   xml += `<!DOCTYPE photodata SYSTEM "${std.dtdName}">\n`;

@@ -2,9 +2,10 @@
 
 ## 🤖 基本スタンス (AI Behavior & Harness Engineering)
 - **目標駆動**: ユーザーから要件（What）を受け取り、AIが設計・実装（How）を主導する。
-- **自己検証（ハーネス）の徹底**:
-  - 変更時は必ず検証用ハーネス（テスト、ビルド検証、静的チェック等）を活用し自己検証すること。
-  - **「同じエラーを二度と発生させない」**: バグ修正時は型定義の強化や検証ハーネスを拡張し、再発防止を自動化する（プロンプトでの謝罪は不要）。
+- **自己検証（ハーネス）の徹底（Rust Cargo準拠の厳格な品質管理）**:
+  - 変更時は必ず検証用ハーネス（`npm run harness`）を活用し自己検証すること。
+  - ハーネス検証パイプライン（`scripts/check-compliance.js` → `biome check` → `tsc --noEmit` → `vitest run` → `vite build`）の全項目パスを必須とする。
+  - **「同じエラーを二度と発生させない」**: バグ修正時は型定義の強化や単体テスト（Vitest）を追加し、再発防止を自動化する。
 - **最小限の変更**: 既存コードの変更箇所は必要最小限に留める。未指示の不要なリファクタリングや設計・機能変更は**絶対に行わないこと**。
 
 ## 👥 マルチエージェント体制による分業
@@ -12,12 +13,18 @@
 1. 👑 **統括 (Orchestrator)**: タスクアサイン、進捗管理、最終マージ、動作確認。
 2. 📝 **設計 (Planner)**: 要件調査、`implementation_plan.md` の作成・更新（ソースコード変更は不可）。
 3. 💻 **実装 (Coder)**: 設計に基づくコーディング、`task.md` の更新。
-4. 🔬 **検証 (Validator)**: `npm run harness` 実行、`walkthrough.md` での完了報告。
+4. 🔬 **検証 (Validator)**: `npm run harness`（静的解析・型検査・単体テスト・ビルド・セキュリティ検証）の実行、`walkthrough.md` での完了報告。
 ※ 各成果物（.md）は App Data Directory 配下の `brain/<conversation-id>/` 内に作成する。
 
 ## 💻 技術スタックとコーディング規約 (Tech Stack & Coding Standards)
 - **フロントエンド / UI**: Vite + React (TypeScript) + Tailwind CSS (SPA)
   - 新規コンポーネントやロジックは `src/` 配下の適切なディレクトリ（`components/`, `utils/` 等）へ分割して実装する。
+- **検査・品質管理ツール (Cargo-like Inspection)**:
+  - **Linter & Formatter**: Biome (`biome check`, `biome format`) - `cargo clippy` & `cargo fmt` 相当
+  - **型検査**: `tsc --noEmit` - `cargo check` 相当
+  - **単体テスト**: Vitest (`vitest run`) - `cargo test` 相当
+  - **シークレットスキャン**: Betterleaks (`betterleaks git --staged`)
+  - **依存関係監査**: `npm audit` - `cargo audit` 相当
 - **コード品質**: 型定義は `src/types.ts` に集約し型安全を維持。複雑な処理には日本語コメントを付与。
 
 ### 🏷️ 命名規則 (Naming Conventions)
@@ -26,6 +33,7 @@
   - Reactコンポーネント: パスカルケース (`PascalCase.tsx`)
   - カスタムHooks: `use` 開始キャメルケース (`useCamelCase.ts`)
   - ユーティリティ: キャメルケース (`camelCase.ts`)
+  - テストファイル: 対象名+`.test.ts` (`foo.test.ts`)
   - 静的アセット/スタイル: ケバブケース (`kebab-case`)
 - **コンポーネント/関数**:
   - Reactコンポーネント: パスカルケース (`PascalCase`)
@@ -49,7 +57,7 @@
 7. **エラーハンドリング**: 非同期処理 (`async/await`, `Promise`) は必ず `try-catch` 等で処理しエラーを握り潰さない。Error Boundary を適切に配置。
 8. **依存関係の制限**: 外部ライブラリ導入は最小限にし、標準のReact/Web APIでの実装を優先する。
 9. **Null/Undefined 安全性**: オプショナルチェイニング (`?.`) や Null合体演算子 (`??`) を使用し、実行時エラーを防ぐ。
-10. **警告ゼロビルド**: `tsconfig.json` の `strict: true` を維持。ESLint/Prettier/Viteビルドの警告およびエラーを全て解消してコミットする。
+10. **警告ゼロビルド**: `tsconfig.json` の `strict: true` を維持。Biome/Viteビルド/Vitestテストの警告およびエラーを全て解消してコミットする。
 
 ## 📝 自律型ワークフロー (Autonomous Workflow)
 1. **計画**: `Planner` が `implementation_plan.md` を作成し、ユーザー合意を得る。

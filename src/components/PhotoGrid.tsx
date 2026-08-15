@@ -1,7 +1,7 @@
-import React from 'react';
-import { Photo } from '../types';
-import { PhotoCard } from './PhotoCard';
+import type React from 'react';
+import type { Photo } from '../types';
 import { Ic } from './Icons';
+import { PhotoCard } from './PhotoCard';
 
 interface PhotoGridProps {
   photos: Photo[];
@@ -34,15 +34,15 @@ export const PhotoGrid: React.FC<PhotoGridProps> = ({
   handlePhotoClick,
   setPreviewPhoto,
 }) => {
-  const renderPaginationControls = (extraClass = "") => {
+  const renderPaginationControls = (extraClass = '') => {
     if (totalPages <= 1) return null;
     return (
       <div className={`flex items-center justify-center gap-4 w-full no-print ${extraClass}`}>
         <button
           className={`flex items-center gap-1.5 px-4 py-2 text-xs font-bold bg-white border border-slate-200 rounded-lg shadow-sm transition-all hover:bg-slate-50 ${currentPage === 1 ? 'opacity-50 cursor-not-allowed text-slate-300' : 'text-slate-600 hover:border-slate-300'}`}
-          onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+          onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
           disabled={currentPage === 1}
-          onDragOver={e => handlePageDragOver(e, 'prev')}
+          onDragOver={(e) => handlePageDragOver(e, 'prev')}
           onDragLeave={handlePageDragLeave}
           onDrop={handlePageDragLeave}
         >
@@ -53,9 +53,9 @@ export const PhotoGrid: React.FC<PhotoGridProps> = ({
         </div>
         <button
           className={`flex items-center gap-1.5 px-4 py-2 text-xs font-bold bg-white border border-slate-200 rounded-lg shadow-sm transition-all hover:bg-slate-50 ${currentPage === totalPages ? 'opacity-50 cursor-not-allowed text-slate-300' : 'text-slate-600 hover:border-slate-300'}`}
-          onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+          onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
           disabled={currentPage === totalPages}
-          onDragOver={e => handlePageDragOver(e, 'next')}
+          onDragOver={(e) => handlePageDragOver(e, 'next')}
           onDragLeave={handlePageDragLeave}
           onDrop={handlePageDragLeave}
         >
@@ -90,10 +90,10 @@ export const PhotoGrid: React.FC<PhotoGridProps> = ({
 
   return (
     <div className="flex-1 overflow-y-auto p-6 bg-slate-50">
-      {renderPaginationControls("mb-6")}
-      
+      {renderPaginationControls('mb-6')}
+
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-5">
-        {paginatedPhotos.map(p => (
+        {paginatedPhotos.map((p) => (
           <PhotoCard
             key={p.id}
             p={p}
@@ -103,13 +103,13 @@ export const PhotoGrid: React.FC<PhotoGridProps> = ({
             handlePageDragLeave={handlePageDragLeave}
             photos={photos}
             setPhotos={setPhotos}
-            onClick={e => handlePhotoClick(e, p.id)}
+            onClick={(e) => handlePhotoClick(e, p.id)}
             onDoubleClick={() => setPreviewPhoto(p)}
           />
         ))}
       </div>
 
-      {renderPaginationControls("mt-8 pt-4 pb-4 border-t border-slate-100")}
+      {renderPaginationControls('mt-8 pt-4 pb-4 border-t border-slate-100')}
     </div>
   );
 };

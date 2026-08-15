@@ -6,8 +6,18 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "harness": "node scripts/check-compliance.js && tsc --noEmit && vite build",
-    "preview": "vite preview"
+    "check": "biome check",
+    "check:fix": "biome check --write",
+    "lint": "biome lint",
+    "format": "biome format --write",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "audit:deps": "npm audit",
+    "audit:secrets": "betterleaks git --staged -c $([ -f .betterleaks.local.toml ] && echo .betterleaks.local.toml || echo .betterleaks.toml)",
+    "audit:all": "betterleaks dir . -c $([ -f .betterleaks.local.toml ] && echo .betterleaks.local.toml || echo .betterleaks.toml)",
+    "harness": "node scripts/check-compliance.js && biome check && tsc --noEmit && vitest run && vite build",
+    "preview": "vite preview",
+    "prepare": "git config core.hooksPath .githooks || true"
   },
   "dependencies": {
     "encoding-japanese": "^2.2.0",
@@ -16,6 +26,7 @@
     "react-dom": "^18.3.1"
   },
   "devDependencies": {
+    "@biomejs/biome": "^2.5.8",
     "@types/encoding-japanese": "^2.2.1",
     "@types/react": "^18.3.1",
     "@types/react-dom": "^18.3.1",
@@ -25,6 +36,7 @@
     "postcss": "^8.4.0",
     "tailwindcss": "^3.4.0",
     "typescript": "^5.2.2",
-    "vite": "^5.2.0"
+    "vite": "^5.2.0",
+    "vitest": "^4.1.10"
   }
 }

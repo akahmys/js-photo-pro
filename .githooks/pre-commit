@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+# Betterleaks & Quality Assurance pre-commit hook for js-photo-pro
+
+# Ensure standard paths are included in PATH (for GUI Git clients & macOS Homebrew)
+export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH"
+
+echo "🦀 Running pre-commit verification (Cargo-like inspection pipeline)..."
+
+# 1. Biome Linter & Format check on staged files
+if command -v npx >/dev/null 2>&1; then
+  echo "🔍 [1/3] Running Biome linter & formatting check..."
+  if ! npx @biomejs/biome check --staged; then
+    echo "❌ [biome] Commit aborted: Linter or formatting errors found in staged files."
+    echo "Run 'npm run check:fix' to automatically resolve formatting issues."
+    exit 1
+  fi
+fi
+
+# 2. Fast unit tests
+if command -v npm >/dev/null 2>&1; then
+  echo "🧪 [2/3] Running Vitest unit tests..."
+  if ! npm run test -- --silent; then
+    echo "❌ [vitest] Commit aborted: One or more unit tests failed."
+    exit 1
+  fi
+fi
+
+# 3. Betterleaks secret & personal name scan
+if ! command -v betterleaks >/dev/null 2>&1; then
+  echo "⚠️ [betterleaks] warning: betterleaks is not installed or not in PATH."
+  echo "Please install it (e.g. 'brew install betterleaks') to enable secret scanning."
+else
+  echo "🛡️ [3/3] Running Betterleaks security audit on staged changes..."
+  CONFIG_OPT=""
+  if [ -f ".betterleaks.local.toml" ]; then
+    CONFIG_OPT="-c .betterleaks.local.toml"
+  fi
+
+  if ! betterleaks git --staged --verbose $CONFIG_OPT; then
+    echo ""
+    echo "❌ [betterleaks] Commit aborted: Leaks or restricted terms (e.g. personal name / secrets) were detected in staged files."
+    echo "Please review and remove any detected sensitive information before committing."
+    echo "If this is a false positive, you can inline allow with '# betterleaks:allow' or update .betterleaks.local.toml."
+    exit 1
+  fi
+fi
+
+echo "✅ [pre-commit] All security, lint, test, and compliance checks passed!"
+exit 0

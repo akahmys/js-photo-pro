@@ -1,4 +1,4 @@
-import React from 'react';
+import type React from 'react';
 import { STANDARDS } from '../constants/standards';
 
 interface StandardSelectModalProps {
@@ -20,29 +20,35 @@ export const StandardSelectModal: React.FC<StandardSelectModalProps> = ({
         <h3 className="text-base font-black text-slate-700 mb-5 tracking-tight flex items-center gap-2">
           ⚙️ 適用する電子納品基準を選択
         </h3>
-        
+
         <div className="space-y-3">
-          {Object.values(STANDARDS).map(s => (
-            <button 
-              key={s.id} 
+          {Object.values(STANDARDS).map((s) => (
+            <button
+              key={s.id}
               className="w-full text-left p-4.5 border border-slate-200 hover:border-blue-500 bg-white hover:bg-blue-50/30 rounded-xl transition-all duration-200 group flex items-center justify-between shadow-sm hover:shadow"
-              onClick={() => { 
-                onStandardChange(s.id); 
-                onClose(); 
+              onClick={() => {
+                onStandardChange(s.id);
+                onClose();
               }}
             >
               <div>
-                <div className="font-bold text-slate-800 group-hover:text-blue-700 transition-colors text-sm">{s.fullLabel}</div>
+                <div className="font-bold text-slate-800 group-hover:text-blue-700 transition-colors text-sm">
+                  {s.fullLabel}
+                </div>
                 <div className="text-[11px] text-slate-400 mt-1">{s.period}</div>
                 <div className="text-[9px] font-mono text-slate-400/80 mt-0.5">{s.versionTag}</div>
               </div>
-              <span className={`badge ${s.color} text-[10px] font-mono px-2 py-0.5 rounded shadow-sm font-bold`}>{s.dtdName}</span>
+              <span
+                className={`badge ${s.color} text-[10px] font-mono px-2 py-0.5 rounded shadow-sm font-bold`}
+              >
+                {s.dtdName}
+              </span>
             </button>
           ))}
         </div>
 
-        <button 
-          className="text-xs text-slate-400 hover:text-slate-600 font-bold mt-6 underline block mx-auto transition-colors" 
+        <button
+          className="text-xs text-slate-400 hover:text-slate-600 font-bold mt-6 underline block mx-auto transition-colors"
           onClick={onClose}
         >
           キャンセル

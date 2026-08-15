@@ -1,5 +1,5 @@
-import React from 'react';
-import { Photo, Standard } from '../types';
+import type React from 'react';
+import type { Photo, Standard } from '../types';
 import { LazyImage } from './LazyImage';
 
 interface PrintLedgerProps {

@@ -1,6 +1,6 @@
-import React from 'react';
-import { Photo } from '../types';
+import type React from 'react';
 import { PHOTO_CATEGORIES } from '../constants/workMaster';
+import type { Photo } from '../types';
 import { Ic } from './Icons';
 
 interface FilterBarProps {
@@ -55,49 +55,76 @@ export const FilterBar: React.FC<FilterBarProps> = ({
       <div className="flex items-center gap-2 flex-1 min-w-[500px]">
         <Ic k="filter" size={14} cls="text-slate-400 flex-shrink-0" />
 
-        <select 
-          value={fCategory} 
-          onChange={e => setFCategory(e.target.value)} 
+        <select
+          value={fCategory}
+          onChange={(e) => setFCategory(e.target.value)}
           className="text-xs font-bold bg-slate-50 hover:bg-slate-100/70 border border-slate-200 hover:border-slate-300 rounded-lg px-3 py-2 outline-none cursor-pointer transition-all max-w-[150px] flex-shrink-0 select-custom"
         >
           <option value="">区分: すべて</option>
-          {PHOTO_CATEGORIES.map(o => <option key={o} value={o}>{o}</option>)}
+          {PHOTO_CATEGORIES.map((o) => (
+            <option key={o} value={o}>
+              {o}
+            </option>
+          ))}
         </select>
 
-        <select 
-          value={fWorkType} 
-          onChange={e => setFWorkType(e.target.value)} 
+        <select
+          value={fWorkType}
+          onChange={(e) => setFWorkType(e.target.value)}
           className="text-xs font-bold bg-slate-50 hover:bg-slate-100/70 border border-slate-200 hover:border-slate-300 rounded-lg px-3 py-2 outline-none cursor-pointer transition-all max-w-[150px] flex-shrink-0 select-custom"
         >
           <option value="">工種: すべて</option>
-          {[...new Set(photos.map(p => p.workType))].filter(Boolean).sort().map(o => <option key={o} value={o}>{o}</option>)}
+          {[...new Set(photos.map((p) => p.workType))]
+            .filter(Boolean)
+            .sort()
+            .map((o) => (
+              <option key={o} value={o}>
+                {o}
+              </option>
+            ))}
         </select>
 
-        <select 
-          value={fType} 
-          onChange={e => setFType(e.target.value)} 
+        <select
+          value={fType}
+          onChange={(e) => setFType(e.target.value)}
           className="text-xs font-bold bg-slate-50 hover:bg-slate-100/70 border border-slate-200 hover:border-slate-300 rounded-lg px-3 py-2 outline-none cursor-pointer transition-all max-w-[150px] flex-shrink-0 select-custom"
         >
           <option value="">種別: すべて</option>
-          {[...new Set(photos.map(p => p.type))].filter(Boolean).sort().map(o => <option key={o} value={o}>{o}</option>)}
+          {[...new Set(photos.map((p) => p.type))]
+            .filter(Boolean)
+            .sort()
+            .map((o) => (
+              <option key={o} value={o}>
+                {o}
+              </option>
+            ))}
         </select>
 
-        <select 
-          value={fSubdivision} 
-          onChange={e => setFSubdivision(e.target.value)} 
+        <select
+          value={fSubdivision}
+          onChange={(e) => setFSubdivision(e.target.value)}
           className="text-xs font-bold bg-slate-50 hover:bg-slate-100/70 border border-slate-200 hover:border-slate-300 rounded-lg px-3 py-2 outline-none cursor-pointer transition-all max-w-[150px] flex-shrink-0 select-custom"
         >
           <option value="">細別: すべて</option>
-          {[...new Set(photos.map(p => p.subdivision))].filter(Boolean).sort().map(o => <option key={o} value={o}>{o}</option>)}
+          {[...new Set(photos.map((p) => p.subdivision))]
+            .filter(Boolean)
+            .sort()
+            .map((o) => (
+              <option key={o} value={o}>
+                {o}
+              </option>
+            ))}
         </select>
 
-        <button 
-          className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-bold transition-all ${fErr ? 'bg-red-50 text-red-600 border border-red-200 hover:bg-red-100/70' : 'bg-slate-50 hover:bg-slate-100/70 text-slate-600 border border-slate-200 hover:border-slate-300'}`} 
-          onClick={() => setFErr(v => !v)}
+        <button
+          className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-bold transition-all ${fErr ? 'bg-red-50 text-red-600 border border-red-200 hover:bg-red-100/70' : 'bg-slate-50 hover:bg-slate-100/70 text-slate-600 border border-slate-200 hover:border-slate-300'}`}
+          onClick={() => setFErr((v) => !v)}
         >
-          <Ic k="alertCircle" size={13} /> 未完了 
+          <Ic k="alertCircle" size={13} /> 未完了
           {errorCount > 0 && (
-            <span className={`badge ${fErr ? 'bg-red-600 text-white' : 'bg-amber-500 text-white'} text-[9px] px-1.5 py-0.5 rounded shadow-sm font-mono`}>
+            <span
+              className={`badge ${fErr ? 'bg-red-600 text-white' : 'bg-amber-500 text-white'} text-[9px] px-1.5 py-0.5 rounded shadow-sm font-mono`}
+            >
               {errorCount}
             </span>
           )}
@@ -105,9 +132,19 @@ export const FilterBar: React.FC<FilterBarProps> = ({
       </div>
 
       <div className="ml-auto flex items-center gap-2 flex-shrink-0">
-        <button className="text-xs font-bold text-blue-600 hover:text-blue-800 transition-colors" onClick={onSelectAll}>全選択</button>
+        <button
+          className="text-xs font-bold text-blue-600 hover:text-blue-800 transition-colors"
+          onClick={onSelectAll}
+        >
+          全選択
+        </button>
         <span className="text-slate-300">|</span>
-        <button className="text-xs font-bold text-slate-500 hover:text-slate-700 transition-colors" onClick={onClearSelection}>解除</button>
+        <button
+          className="text-xs font-bold text-slate-500 hover:text-slate-700 transition-colors"
+          onClick={onClearSelection}
+        >
+          解除
+        </button>
       </div>
     </div>
   );
