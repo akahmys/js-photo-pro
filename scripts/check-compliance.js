@@ -2,14 +2,8 @@ import { execSync } from 'node:child_process';
 import fs from 'node:fs';
 
 // 1. プロジェクト固有コンプライアンスルール定義
-// ※ 秘密鍵、APIキー、メールアドレス、個人情報等のシークレット監査は Betterleaks が担当
+// ※ 秘密鍵、APIキー、メールアドレス、個人情報、ローカル絶対パス等は Betterleaks が担当
 const COMPLIANCE_RULES = [
-  {
-    name: 'Absolute Local Path',
-    regex: /\/Users\/[a-zA-Z0-9_-]+\/|[a-zA-Z]:[\\/]Users[\\/][a-zA-Z0-9_-]+\//i,
-    message:
-      'ローカル環境の絶対パス（例: /Users/ユーザー名/...）が検出されました。相対パスを使用してください。',
-  },
   {
     name: 'Forbidden Standard Specs / Documents',
     // ソースコード内の軽微な言及（コメントなど）は許容するが、大量の仕様書テキストや書類ファイル自体の混入を警告
