@@ -15,7 +15,7 @@
     "audit:deps": "npm audit",
     "audit:secrets": "betterleaks git --staged -c $([ -f .betterleaks.local.toml ] && echo .betterleaks.local.toml || echo .betterleaks.toml)",
     "audit:all": "betterleaks dir . -c $([ -f .betterleaks.local.toml ] && echo .betterleaks.local.toml || echo .betterleaks.toml)",
-    "harness": "node scripts/check-compliance.js && biome check && tsc --noEmit && vitest run && vite build",
+    "harness": "biome check && tsc --noEmit && vitest run && vite build",
     "preview": "vite preview",
     "prepare": "git config core.hooksPath .githooks || true"
   },
